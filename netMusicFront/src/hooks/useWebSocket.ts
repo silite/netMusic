@@ -14,7 +14,8 @@ export default () => {
   rws.addEventListener('message', (evt) => {
     const data = evt.data as string
 
-    status.value = data.includes('error') ? 'error' : 'success'
+    if (!data.includes('id*ss*'))
+      status.value = data.includes('error') ? 'error' : 'success'
 
     const [key, value] = data.split('*ss*')
     message[key as WsKey] = value

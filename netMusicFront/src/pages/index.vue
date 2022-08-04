@@ -18,9 +18,11 @@ const lrc = computed(() => [getLrcItem(currentLrc.value.text?.curr), getLrcItem(
 <template>
   <transition name="fade">
     <div v-if="status !== 'success'" absolute>
-      loading...
+      <div class="loading">
+        loading...
+      </div>
     </div>
-    <div v-else>
+    <div v-else absolute>
       <div>
         lyric:
         <div v-for="(item, index) in lrc" :key="index">
@@ -42,6 +44,27 @@ const lrc = computed(() => [getLrcItem(currentLrc.value.text?.curr), getLrcItem(
     </div>
   </transition>
 </template>
+
+<style scoped>
+.loading {
+  animation: breath 3s infinite alternate;
+  animation-timing-function: ease-in-out;
+}
+
+@keyframes breath {
+  from {
+    opacity: 0.5;
+  }
+
+  70% {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0.5;
+  }
+}
+</style>
 
 <style scoped>
 .fade-enter-active,
