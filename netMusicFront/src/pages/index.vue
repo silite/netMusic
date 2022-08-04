@@ -13,61 +13,24 @@ const lrc = useLrc(proxyMessage)
 const progress = useProgress(proxyMessage)
 
 const isPlaying = computed(() => proxyMessage.isPlaying?.includes('True'))
+
+const songInfo = computed(() => {
+  const [songName, player] = (proxyMessage.title?.split(' - ') || [])
+  return { songName, player }
+})
 </script>
 
 <template>
   <transition name="fade">
     <div v-if="status !== 'success'" absolute>
-      <div class="loading">
-        loading...
-      </div>
+      <LoadingItem />
     </div>
     <div v-else absolute>
-      <div>
-        lyric:
-        <div v-for="(item, index) in lrc" :key="index">
-          {{ item }}
-        </div>
-      </div>
-      <div>
-        name: {{ proxyMessage.title }}
-      </div>
-      <div>
-        isPlaying: {{ isPlaying }}
-      </div>
-      <div>
-        {{ progress }}
-      </div>
-      <div>
-        playTime: {{ proxyMessage.playTime }}
-      </div>
-      <div>
-        totalTime: {{ proxyMessage.totalTime }}
-      </div>
+      <SongItem :songName="songInfo.songName" :player="songInfo.player" :progress="progress" :isPlaying="isPlaying" />
+      <LrcItem :lrc="lrc" />
     </div>
   </transition>
 </template>
-
-<style scoped>
-.loading {
-  animation: breath 3s infinite alternate;
-  animation-timing-function: ease-in-out;
-}
-
-@keyframes breath {
-  from {
-    opacity: 0.5;
-  }
-
-  70% {
-    opacity: 1;
-  }
-
-  to {
-    opacity: 0.5;
-  }
-}
-</style>
 
 <style scoped>
 .fade-enter-active,

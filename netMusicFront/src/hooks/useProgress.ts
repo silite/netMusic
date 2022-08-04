@@ -7,7 +7,7 @@ export default (message: Message) => {
   watchEffect(() => {
     const { playTime, totalTime } = message
     try {
-      progress.value = str2Time(playTime) / str2Time(totalTime)
+      progress.value = Number((str2Time(playTime) / str2Time(totalTime)).toFixed(2))
 
       if (progress.value > 1)
         progress.value = 1
