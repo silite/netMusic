@@ -4,11 +4,16 @@ import { str2Time } from '~/utils/common'
 type lines = Parameters<ConstructorParameters<typeof Lyric>[0]['onSetLyric']>[0]
 
 export default (message: Message) => {
-  const currentLrc = ref<{ line?: Number; text?: String; lrcLines?: lines }>({})
+  const currentLrc = ref<{ line?: Number; text?: { curr?: string; next?: string }; lrcLines?: lines }>({})
 
   const lrcParser = new Lyric({
-    onPlay: (line, text) => {
-      currentLrc.value = { ...currentLrc.value, line, text: `${text}*ss*${currentLrc.value?.lrcLines?.[line as number].extendedLyrics}` }
+    onPlay: (line) => {
+      const lineNum = line as number
+      const getLrc = (num: number) => {
+        const currentLrcObj = currentLrc.value?.lrcLines?.[num]
+        return `${currentLrcObj?.text || ''}*ss*${currentLrcObj?.extendedLyrics || ''}`
+      }
+      currentLrc.value = { ...currentLrc.value, line, text: { curr: getLrc(lineNum), next: getLrc(lineNum + 1) } }
     },
 
     onSetLyric: (lines) => {
@@ -26,6 +31,8 @@ export default (message: Message) => {
   })
 
   watchEffect(() => {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-expect-error
     lrcParser.setLyric(message.lyric || '', [message.tlyric || ''])
   })
 
