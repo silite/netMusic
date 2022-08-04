@@ -1,9 +1,9 @@
 import ReconnectReconnectingWebSocket from 'reconnecting-websocket'
-type wsKey = 'title' | 'isPlaying' | 'playTime' | 'totalTime' | 'id'
+import type { Message, WsKey } from '~/types/common'
 
 export default () => {
   const status = ref('loading')
-  const message = reactive<Partial<Record<wsKey, string>>>({})
+  const message = reactive<Message>({})
 
   const rws = new ReconnectReconnectingWebSocket('ws://localhost:12449')
 
@@ -17,7 +17,7 @@ export default () => {
     status.value = data.includes('error') ? 'error' : 'success'
 
     const [key, value] = data.split('*ss*')
-    message[key as wsKey] = value
+    message[key as WsKey] = value
   })
 
   rws.addEventListener('close', () => {
