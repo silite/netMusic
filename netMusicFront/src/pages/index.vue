@@ -1,48 +1,28 @@
 <script setup lang="ts">
+import ReconnectReconnectingWebSocket from 'reconnecting-websocket'
 type wsKey = 'title' | 'isPlaying' | 'playTime' | 'totalTime' | 'id'
 
 const status = ref('loading')
 const message = reactive<Partial<Record<wsKey, string>>>({})
 
-let ws: WebSocket | null
-const wsInit = () => {
-  ws = new WebSocket('ws://localhost:12449')
+const rws = new ReconnectReconnectingWebSocket('ws://localhost:12449')
 
-  ws.onopen = () => {
-    status.value = 'connected'
-  }
+rws.addEventListener('open', () => {
+  status.value = 'connected'
+})
 
-  ws.onmessage = (evt) => {
-    const data = evt.data as string
-    if (data.includes('error')) {
-      status.value = 'error'
-    }
-    else if (data) {
-      const [key, value] = data.split('*ss*')
-      message[key as wsKey] = value
-    }
-  }
+rws.addEventListener('message', (evt) => {
+  const data = evt.data as string
 
-  ws.onerror = () => {
-    status.value = 'loading'
-    setTimeout(() => {
-      ws?.close()
-      ws = null
-      wsInit()
-    }, 1000)
-  }
+  status.value = data.includes('error') ? 'error' : 'success'
 
-  ws.onclose = () => {
-    status.value = 'loading'
-    setTimeout(() => {
-      ws?.close()
-      ws = null
-      wsInit()
-    }, 1000)
-  }
-}
+  const [key, value] = data.split('*ss*')
+  message[key as wsKey] = value
+})
 
-wsInit()
+rws.addEventListener('close', () => {
+  status.value = 'loading'
+})
 </script>
 
 <template>
