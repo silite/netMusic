@@ -25,7 +25,7 @@ app.post('/lyric', async (req, res) => {
     const { body } = await lyric({ id })
     res.send(body?.lrc)
   } catch (e) {
-    res.send({})
+    res.send({ lyric: "查找失败-_-" })
   }
 
 })
