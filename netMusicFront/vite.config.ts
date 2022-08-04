@@ -51,4 +51,8 @@ export default defineConfig({
   test: {
     environment: 'jsdom',
   },
+
+  build: {
+    outDir: '../nodeMiddleware/dist',
+  },
 })
