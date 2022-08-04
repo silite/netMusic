@@ -42,5 +42,8 @@ export default (message: Message) => {
     else lrcParser.pause()
   })
 
-  return { currentLrc }
+  const getLrcItem = (str?: string) => str?.split('*ss*').filter(item => Boolean(item)) || ''
+  const lrc = computed(() => [getLrcItem(currentLrc.value.text?.curr), getLrcItem(currentLrc.value.text?.next)].filter(item => item?.length))
+
+  return lrc
 }

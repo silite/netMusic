@@ -2,17 +2,17 @@
 import useWebSocket from '~/hooks/useWebSocket'
 import useProxyMessage from '~/hooks/useProxyMessage'
 import useLrc from '~/hooks/useLrc'
+import useProgress from '~/hooks/useProgress'
 
 const { status, message } = useWebSocket()
 
 const { proxyMessage } = await useProxyMessage(message)
 
-const { currentLrc } = useLrc(proxyMessage)
+const lrc = useLrc(proxyMessage)
+
+const progress = useProgress(proxyMessage)
 
 const isPlaying = computed(() => proxyMessage.isPlaying?.includes('True'))
-
-const getLrcItem = (str?: string) => str?.split('*ss*').filter(item => Boolean(item)) || ''
-const lrc = computed(() => [getLrcItem(currentLrc.value.text?.curr), getLrcItem(currentLrc.value.text?.next)].filter(item => item?.length))
 </script>
 
 <template>
@@ -34,6 +34,9 @@ const lrc = computed(() => [getLrcItem(currentLrc.value.text?.curr), getLrcItem(
       </div>
       <div>
         isPlaying: {{ isPlaying }}
+      </div>
+      <div>
+        {{ progress }}
       </div>
       <div>
         playTime: {{ proxyMessage.playTime }}
