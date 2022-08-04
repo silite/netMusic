@@ -4,7 +4,7 @@ import useProxyMessage from '~/hooks/useProxyMessage'
 
 const { status, message } = useWebSocket()
 
-const { proxyMessage } = useProxyMessage(message)
+const { proxyMessage } = await useProxyMessage(message)
 </script>
 
 <template>
