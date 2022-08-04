@@ -32,15 +32,22 @@ public class ReadFile
 
     private static string getActivePlayMusicId(string path)
     {
-        var fileStream = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
-        var streamReader = new StreamReader(fileStream, System.Text.Encoding.UTF8);
-        string originString = streamReader.ReadToEnd();
-        streamReader.Close();
-        fileStream.Close();
+        try
+        {
+            var fileStream = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+            var streamReader = new StreamReader(fileStream, System.Text.Encoding.UTF8);
+            string originString = streamReader.ReadToEnd();
+            streamReader.Close();
+            fileStream.Close();
 
-        JArray jsonString = JArray.Parse(originString);
+            JArray jsonString = JArray.Parse(originString);
 
-        return "id*ss*" + jsonString.First["tid"];
+            return "id*ss*" + jsonString.First["tid"];
+        }
+        catch (Exception e)
+        {
+            return getActivePlayMusicId(path);
+        }
     }
 
     public static ReadFile Instance
