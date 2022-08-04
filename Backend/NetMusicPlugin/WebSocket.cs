@@ -16,6 +16,7 @@ public class WebSocket
             {
                 Console.WriteLine("server start");
                 allSockets.Add(socket);
+                ReadFile.readFildInit();
             };
 
             socket.OnClose = () =>

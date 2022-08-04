@@ -6,17 +6,12 @@ using System.IO;
 public class ReadFile
 {
     private static ReadFile instance = null;
+    private static string netMusicPath = Environment.ExpandEnvironmentVariables(@"%localappdata%\Netease\CloudMusic\webdata\file");
 
     private ReadFile()
     {
-        WebSocket webSocket = WebSocket.Instance;
-
-        string netMusicPath = @"%localappdata%\Netease\CloudMusic\webdata\file";
-        
-        webSocket.send(getActivePlayMusicId(netMusicPath + "history"));
-
         FileSystemWatcher watcher = new FileSystemWatcher();
-        watcher.Path = Environment.ExpandEnvironmentVariables(netMusicPath);
+        watcher.Path = netMusicPath;
         watcher.Changed += new System.IO.FileSystemEventHandler(watcherChange);
         watcher.EnableRaisingEvents = true;
         watcher.Filter = "history";
@@ -25,9 +20,14 @@ public class ReadFile
         {
             new Thread(() =>
             {
-                webSocket.send(getActivePlayMusicId(e.FullPath));
+                WebSocket.Instance.send(getActivePlayMusicId(e.FullPath));
             }).Start();
         }
+    }
+
+    public static void readFildInit()
+    {
+        WebSocket.Instance.send(getActivePlayMusicId(netMusicPath + @"\history"));
     }
 
     private static string getActivePlayMusicId(string path)

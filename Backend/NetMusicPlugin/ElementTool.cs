@@ -28,7 +28,7 @@ public class ElementTool
         }
         catch (Exception e)
         {
-            WebSocket.Instance.send("error");
+            WebSocket.Instance.send("*ss*error");
             throw;
         }
     }
@@ -51,7 +51,7 @@ public class ElementTool
         }
         catch (Exception e)
         {
-            WebSocket.Instance.send("error");
+            WebSocket.Instance.send("*ss*error");
             throw;
         }
     }
