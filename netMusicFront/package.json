@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@vueuse/core": "^9.0.0",
+    "NeteaseCloudMusicApi": "^4.6.7",
     "reconnecting-websocket": "^4.4.0",
     "vue": "^3.2.37",
     "vue-router": "^4.1.2"
