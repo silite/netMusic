@@ -18,10 +18,18 @@ public class ReadFile
 
         void watcherChange(object sender, FileSystemEventArgs e)
         {
-            new Thread(() =>
+            try
             {
-                WebSocket.Instance.send(getActivePlayMusicId(e.FullPath));
-            }).Start();
+                new Thread(() =>
+                {
+                    WebSocket.Instance.send(getActivePlayMusicId(e.FullPath));
+                }).Start();
+            }
+            catch (Exception exception)
+            {
+                Console.WriteLine(exception);
+                throw;
+            }
         }
     }
 

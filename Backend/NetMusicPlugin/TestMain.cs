@@ -1,11 +1,11 @@
 ﻿using System.Collections;
+using System.Diagnostics;
 using NetMusicPlugin;
 
 class TestMain
 {
     static void Main(string[] args)
     {
-
         System.Timers.Timer timer = new System.Timers.Timer(1000);
         timer.Elapsed += new System.Timers.ElapsedEventHandler(trigger);
         timer.AutoReset = true; //设置是执行一次（false）还是一直执行(true)； 
