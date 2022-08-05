@@ -1,0 +1,15 @@
+C:\Users\silite\Desktop\netMusic\AppStart\AppStart\bin\Debug\net6.0\AppStart.exe
+C:\Users\silite\Desktop\netMusic\AppStart\AppStart\bin\Debug\net6.0\AppStart.deps.json
+C:\Users\silite\Desktop\netMusic\AppStart\AppStart\bin\Debug\net6.0\AppStart.runtimeconfig.json
+C:\Users\silite\Desktop\netMusic\AppStart\AppStart\bin\Debug\net6.0\AppStart.dll
+C:\Users\silite\Desktop\netMusic\AppStart\AppStart\bin\Debug\net6.0\AppStart.pdb
+C:\Users\silite\Desktop\netMusic\AppStart\AppStart\obj\Debug\net6.0\AppStart.csproj.AssemblyReference.cache
+C:\Users\silite\Desktop\netMusic\AppStart\AppStart\obj\Debug\net6.0\AppStart.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\silite\Desktop\netMusic\AppStart\AppStart\obj\Debug\net6.0\AppStart.AssemblyInfoInputs.cache
+C:\Users\silite\Desktop\netMusic\AppStart\AppStart\obj\Debug\net6.0\AppStart.AssemblyInfo.cs
+C:\Users\silite\Desktop\netMusic\AppStart\AppStart\obj\Debug\net6.0\AppStart.csproj.CoreCompileInputs.cache
+C:\Users\silite\Desktop\netMusic\AppStart\AppStart\obj\Debug\net6.0\AppStart.dll
+C:\Users\silite\Desktop\netMusic\AppStart\AppStart\obj\Debug\net6.0\refint\AppStart.dll
+C:\Users\silite\Desktop\netMusic\AppStart\AppStart\obj\Debug\net6.0\AppStart.pdb
+C:\Users\silite\Desktop\netMusic\AppStart\AppStart\obj\Debug\net6.0\AppStart.genruntimeconfig.cache
+C:\Users\silite\Desktop\netMusic\AppStart\AppStart\obj\Debug\net6.0\ref\AppStart.dll

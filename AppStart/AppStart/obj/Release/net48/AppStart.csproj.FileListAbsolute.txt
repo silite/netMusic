@@ -1,0 +1,11 @@
+C:\Users\silite\Desktop\netMusic\AppStart\AppStart\bin\Release\net48\AppStart.exe.config
+C:\Users\silite\Desktop\netMusic\AppStart\AppStart\bin\Release\net48\AppStart.exe
+C:\Users\silite\Desktop\netMusic\AppStart\AppStart\bin\Release\net48\AppStart.pdb
+C:\Users\silite\Desktop\netMusic\AppStart\AppStart\obj\Release\net48\AppStart.csproj.AssemblyReference.cache
+C:\Users\silite\Desktop\netMusic\AppStart\AppStart\obj\Release\net48\AppStart.csproj.SuggestedBindingRedirects.cache
+C:\Users\silite\Desktop\netMusic\AppStart\AppStart\obj\Release\net48\AppStart.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\silite\Desktop\netMusic\AppStart\AppStart\obj\Release\net48\AppStart.AssemblyInfoInputs.cache
+C:\Users\silite\Desktop\netMusic\AppStart\AppStart\obj\Release\net48\AppStart.AssemblyInfo.cs
+C:\Users\silite\Desktop\netMusic\AppStart\AppStart\obj\Release\net48\AppStart.csproj.CoreCompileInputs.cache
+C:\Users\silite\Desktop\netMusic\AppStart\AppStart\obj\Release\net48\AppStart.exe
+C:\Users\silite\Desktop\netMusic\AppStart\AppStart\obj\Release\net48\AppStart.pdb
