@@ -1,0 +1,4 @@
+﻿  DllInjector.cpp
+C:\Users\silite\Desktop\netMusic\DllInjector\DllInjector\DllInjector.cpp(41,63): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
+C:\Users\silite\Desktop\netMusic\DllInjector\DllInjector\DllInjector.cpp(143): warning C4715: “InjectDLL”: 不是所有的控件路径都返回值
+  DllInjector.vcxproj -> C:\Users\silite\Desktop\netMusic\DllInjector\x64\Debug\DllInjector.exe
