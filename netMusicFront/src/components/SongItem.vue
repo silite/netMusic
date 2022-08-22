@@ -9,7 +9,11 @@ defineProps<propType>()
 </script>
 
 <template>
-  <div flex="~">
+  <div
+    flex="~"
+    w-600px
+    h-200px
+  >
     <div>
       <span>进度条:{{ progress }}</span>
       <span>{{ isPlaying }}</span>

@@ -20,7 +20,7 @@ export default (message: Message) => {
       currentLrc.value.lrcLines = lines
     },
 
-    offset: -700,
+    offset: -500,
 
     isRemoveBlankLine: true,
 
