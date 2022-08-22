@@ -109,11 +109,11 @@
 // If the Chromium implementation diverges the below implementation should be
 // updated to match.
 
-#include "include/base/cef_basictypes.h"
-#include "include/base/cef_logging.h"
-#include "include/base/cef_ref_counted.h"
-#include "include/base/cef_template_util.h"
-#include "include/base/cef_thread_checker.h"
+#include "base/cef_basictypes.h"
+#include "base/cef_logging.h"
+#include "base/cef_ref_counted.h"
+#include "base/cef_template_util.h"
+#include "base/cef_thread_checker.h"
 
 namespace base {
 

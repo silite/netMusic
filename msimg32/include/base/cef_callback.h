@@ -45,9 +45,9 @@
 // If the Chromium implementation diverges the below implementation should be
 // updated to match.
 
-#include "include/base/cef_callback_forward.h"
-#include "include/base/cef_template_util.h"
-#include "include/base/internal/cef_callback_internal.h"
+#include "base/cef_callback_forward.h"
+#include "base/cef_template_util.h"
+#include "base/internal/cef_callback_internal.h"
 
 // NOTE: Header files that do not require the full definition of Callback or
 // Closure should #include "base/cef_callback_forward.h" instead of this file.

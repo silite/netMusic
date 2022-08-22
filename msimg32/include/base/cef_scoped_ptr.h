@@ -135,11 +135,11 @@
 
 #include <algorithm>  // For std::swap().
 
-#include "include/base/cef_basictypes.h"
-#include "include/base/cef_build.h"
-#include "include/base/cef_macros.h"
-#include "include/base/cef_move.h"
-#include "include/base/cef_template_util.h"
+#include "base/cef_basictypes.h"
+#include "base/cef_build.h"
+#include "base/cef_macros.h"
+#include "base/cef_move.h"
+#include "base/cef_template_util.h"
 
 namespace base {
 

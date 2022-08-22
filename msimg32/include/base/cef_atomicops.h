@@ -69,7 +69,7 @@
 
 #include <stdint.h>
 
-#include "include/base/cef_build.h"
+#include "base/cef_build.h"
 
 #if defined(OS_WIN) && defined(ARCH_CPU_64_BITS)
 // windows.h #defines this (only on x64). This causes problems because the
@@ -177,7 +177,7 @@ Atomic64 Release_Load(volatile const Atomic64* ptr);
 
 // Include our platform specific implementation.
 #if defined(OS_WIN) && defined(COMPILER_MSVC) && defined(ARCH_CPU_X86_FAMILY)
-#include "include/base/internal/cef_atomicops_x86_msvc.h"
+#include "base/internal/cef_atomicops_x86_msvc.h"
 #elif defined(OS_WIN) && (defined(__ARM_ARCH_ISA_A64) || defined(_M_ARM64))
 #include "include/base/internal/cef_atomicops_arm64_msvc.h"
 #elif defined(OS_MAC)

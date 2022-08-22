@@ -37,9 +37,9 @@
 #define CEF_INCLUDE_WRAPPER_CEF_CLOSURE_TASK_H_
 #pragma once
 
-#include "include/base/cef_callback_forward.h"
-#include "include/base/cef_macros.h"
-#include "include/cef_task.h"
+#include "base/cef_callback_forward.h"
+#include "base/cef_macros.h"
+#include "cef_task.h"
 
 ///
 // Helpers for asynchronously executing a base::Closure (bound function or

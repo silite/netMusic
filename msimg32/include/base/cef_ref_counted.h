@@ -48,10 +48,10 @@
 
 #include <cassert>
 
-#include "include/base/cef_atomic_ref_count.h"
-#include "include/base/cef_build.h"
-#include "include/base/cef_logging.h"
-#include "include/base/cef_macros.h"
+#include "base/cef_atomic_ref_count.h"
+#include "base/cef_build.h"
+#include "base/cef_logging.h"
+#include "base/cef_macros.h"
 
 namespace base {
 

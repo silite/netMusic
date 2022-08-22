@@ -47,13 +47,13 @@
 
 #include <list>
 
-#include "include/base/cef_basictypes.h"
-#include "include/base/cef_build.h"
-#include "include/base/cef_callback.h"
-#include "include/base/cef_logging.h"
-#include "include/base/cef_macros.h"
-#include "include/base/cef_scoped_ptr.h"
-#include "include/base/internal/cef_callback_internal.h"
+#include "base/cef_basictypes.h"
+#include "base/cef_build.h"
+#include "base/cef_callback.h"
+#include "base/cef_logging.h"
+#include "base/cef_macros.h"
+#include "base/cef_scoped_ptr.h"
+#include "base/internal/cef_callback_internal.h"
 
 // OVERVIEW:
 //

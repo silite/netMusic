@@ -69,7 +69,7 @@
 // If the Chromium implementation diverges the below implementation should be
 // updated to match.
 
-#include "include/base/cef_bind_helpers.h"
+#include "base/cef_bind_helpers.h"
 
 namespace base {
 

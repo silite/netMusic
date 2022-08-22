@@ -31,13 +31,13 @@
 #define CEF_INCLUDE_INTERNAL_CEF_PTR_H_
 #pragma once
 
-#include "include/base/cef_build.h"
-#include "include/base/cef_ref_counted.h"
+#include "base/cef_build.h"
+#include "base/cef_ref_counted.h"
 
 #if defined(USING_CHROMIUM_INCLUDES)
 #include <memory>  // For std::unique_ptr.
 #else
-#include "include/base/cef_scoped_ptr.h"
+#include "base/cef_scoped_ptr.h"
 #endif
 
 ///

@@ -87,7 +87,7 @@ inline bool AtomicRefCountIsZero(volatile AtomicRefCount* ptr) {
 // If the Chromium implementation diverges the below implementation should be
 // updated to match.
 
-#include "include/base/cef_atomicops.h"
+#include "base/cef_atomicops.h"
 
 // Annotations are not currently supported.
 #define ANNOTATE_HAPPENS_BEFORE(obj) /* empty */

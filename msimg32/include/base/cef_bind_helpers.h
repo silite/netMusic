@@ -183,10 +183,10 @@
 // If the Chromium implementation diverges the below implementation should be
 // updated to match.
 
-#include "include/base/cef_basictypes.h"
-#include "include/base/cef_callback.h"
-#include "include/base/cef_template_util.h"
-#include "include/base/cef_weak_ptr.h"
+#include "base/cef_basictypes.h"
+#include "base/cef_callback.h"
+#include "base/cef_template_util.h"
+#include "base/cef_weak_ptr.h"
 
 namespace base {
 namespace cef_internal {

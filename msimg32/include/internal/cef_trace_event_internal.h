@@ -31,8 +31,8 @@
 #define CEF_INCLUDE_INTERNAL_CEF_TRACE_EVENT_INTERNAL_H_
 #pragma once
 
-#include "include/internal/cef_export.h"
-#include "include/internal/cef_types.h"
+#include "internal/cef_export.h"
+#include "internal/cef_types.h"
 
 #ifdef __cplusplus
 extern "C" {

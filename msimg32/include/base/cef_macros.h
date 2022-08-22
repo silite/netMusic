@@ -42,7 +42,7 @@
 // updated to match.
 
 #include <stddef.h>                  // For size_t.
-#include "include/base/cef_build.h"  // For COMPILER_MSVC
+#include "base/cef_build.h"  // For COMPILER_MSVC
 
 #if !defined(arraysize)
 

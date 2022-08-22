@@ -38,11 +38,11 @@
 
 #include <stddef.h>
 
-#include "include/base/cef_atomic_ref_count.h"
-#include "include/base/cef_macros.h"
-#include "include/base/cef_ref_counted.h"
-#include "include/base/cef_scoped_ptr.h"
-#include "include/base/cef_template_util.h"
+#include "base/cef_atomic_ref_count.h"
+#include "base/cef_macros.h"
+#include "base/cef_ref_counted.h"
+#include "base/cef_scoped_ptr.h"
+#include "base/cef_template_util.h"
 
 template <typename T>
 class ScopedVector;

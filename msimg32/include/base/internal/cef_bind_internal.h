@@ -32,15 +32,15 @@
 #ifndef CEF_INCLUDE_BASE_INTERNAL_CEF_BIND_INTERNAL_H_
 #define CEF_INCLUDE_BASE_INTERNAL_CEF_BIND_INTERNAL_H_
 
-#include "include/base/cef_bind_helpers.h"
-#include "include/base/cef_build.h"
-#include "include/base/cef_template_util.h"
-#include "include/base/cef_weak_ptr.h"
-#include "include/base/internal/cef_callback_internal.h"
-#include "include/base/internal/cef_raw_scoped_refptr_mismatch_checker.h"
+#include "base/cef_bind_helpers.h"
+#include "base/cef_build.h"
+#include "base/cef_template_util.h"
+#include "base/cef_weak_ptr.h"
+#include "base/internal/cef_callback_internal.h"
+#include "base/internal/cef_raw_scoped_refptr_mismatch_checker.h"
 
 #if defined(OS_WIN)
-#include "include/base/internal/cef_bind_internal_win.h"
+#include "base/internal/cef_bind_internal_win.h"
 #endif
 
 namespace base {

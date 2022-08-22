@@ -45,8 +45,8 @@
 // If the Chromium implementation diverges the below implementation should be
 // updated to match.
 
-#include "include/base/internal/cef_bind_internal.h"
-#include "include/base/internal/cef_callback_internal.h"
+#include "base/internal/cef_bind_internal.h"
+#include "base/internal/cef_callback_internal.h"
 
 // -----------------------------------------------------------------------------
 // Usage documentation
