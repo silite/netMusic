@@ -19,7 +19,7 @@ class TestMain
         hwnd=GetConsoleWindow();
         ShowWindow(hwnd,SW_HIDE);
         
-        System.Timers.Timer timer = new System.Timers.Timer(1000);
+        System.Timers.Timer timer = new System.Timers.Timer(300);
         timer.Elapsed += new System.Timers.ElapsedEventHandler(trigger);
         timer.AutoReset = true; //设置是执行一次（false）还是一直执行(true)； 
         timer.Enabled = true;
