@@ -6,12 +6,7 @@ export default (message: Message) => {
   watchEffect(() => {
     const { startTimeStamp = 0, endTimeStamp = 0 } = message
     try {
-      try {
-        progress.value = Number((startTimeStamp / endTimeStamp).toFixed(2))
-      }
-      catch (e) {
-        progress.value = 0
-      }
+      progress.value = Number((startTimeStamp / endTimeStamp).toFixed(2))
 
       if (progress.value > 1)
         progress.value = 1

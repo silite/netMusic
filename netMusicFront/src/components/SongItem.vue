@@ -14,13 +14,13 @@ defineProps<propType>()
     w-600px
     h-200px
   >
-    <div>
-      <span>进度条:{{ progress }}</span>
-      <span>{{ isPlaying }}</span>
-    </div>
     <div flex="~ col" items-end>
       <span font="bold">{{ songName }}</span>
       <span text-xs>{{ player }}</span>
+    </div>
+    <div>
+      <span>进度条:{{ progress }}</span>
+      <span>{{ isPlaying }}</span>
     </div>
   </div>
 </template>

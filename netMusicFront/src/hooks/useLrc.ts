@@ -31,21 +31,21 @@ export default (message: Message) => {
     })
   }
 
-  const lrcParser = ref<any>(getLrcParser())
+  let lrcParser: any = getLrcParser()
 
   watch(() => message?.songID, () => {
     currentLrc.value = {}
-    lrcParser.value = getLrcParser()
+    lrcParser = getLrcParser()
   })
 
   watchEffect(() => {
-    lrcParser.value.setLyric(message.lyric || '', [message.tlyric || ''])
+    lrcParser.setLyric(message.lyric || '', [message.tlyric || ''])
   })
 
   watchEffect(() => {
     if (message.isPlaying === true)
-      lrcParser.value.play((message.startTimeStamp || 0) * 1000)
-    else lrcParser.value.pause()
+      lrcParser.play((message.startTimeStamp || 0) * 1000)
+    else lrcParser.pause()
   })
 
   const getLrcItem = (str?: string) => str?.split('*miko*').filter(item => Boolean(item)) || ''
