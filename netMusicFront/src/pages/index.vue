@@ -4,29 +4,22 @@ import useProxyMessage from '~/hooks/useProxyMessage'
 import useLrc from '~/hooks/useLrc'
 import useProgress from '~/hooks/useProgress'
 
-const { status, message } = useWebSocket()
+const { message } = useWebSocket()
 
 const { proxyMessage } = await useProxyMessage(message)
 
 const lrc = useLrc(proxyMessage)
 
 const progress = useProgress(proxyMessage)
-
-const isPlaying = computed(() => proxyMessage.isPlaying?.includes('True'))
-
-const songInfo = computed(() => {
-  const [songName, player] = (proxyMessage.title?.split(' - ') || [])
-  return { songName, player }
-})
 </script>
 
 <template>
   <transition name="fade">
-    <div v-if="status !== 'success'" absolute>
+    <div v-if="message.status !== 'start'" absolute>
       <LoadingItem />
     </div>
     <div v-else absolute>
-      <SongItem :songName="songInfo.songName" :player="songInfo.player" :progress="progress" :isPlaying="isPlaying" />
+      <SongItem :songName="proxyMessage.songName" :player="proxyMessage.artistName" :progress="progress" :isPlaying="proxyMessage.isPlaying" />
       <LrcItem :lrc="lrc" />
     </div>
   </transition>

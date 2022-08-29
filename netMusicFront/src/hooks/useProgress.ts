@@ -1,13 +1,17 @@
 import type { Message } from '~/types/common'
-import { str2Time } from '~/utils/common'
 
 export default (message: Message) => {
   const progress = ref(0)
 
   watchEffect(() => {
-    const { playTime, totalTime } = message
+    const { startTimeStamp = 0, endTimeStamp = 0 } = message
     try {
-      progress.value = Number((str2Time(playTime) / str2Time(totalTime)).toFixed(2))
+      try {
+        progress.value = Number((startTimeStamp / endTimeStamp).toFixed(2))
+      }
+      catch (e) {
+        progress.value = 0
+      }
 
       if (progress.value > 1)
         progress.value = 1
