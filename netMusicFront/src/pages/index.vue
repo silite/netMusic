@@ -20,7 +20,13 @@ const progress = useProgress(proxyMessage)
     </div>
     <div v-else absolute>
       <LrcItem :lrc="lrc" />
-      <SongItem :songName="proxyMessage.songName" :player="proxyMessage.artistName" :progress="progress" :isPlaying="proxyMessage.isPlaying" />
+      <SongItem
+        :songName="proxyMessage.songName"
+        :subSongName="proxyMessage.subSongName"
+        :player="proxyMessage.artistName"
+        :progress="progress"
+        :isPlaying="proxyMessage.isPlaying"
+      />
     </div>
   </transition>
 </template>

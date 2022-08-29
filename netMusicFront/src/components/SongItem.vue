@@ -4,22 +4,47 @@ interface propType {
   player?: string
   progress?: number
   isPlaying?: boolean
+  subSongName?: string
 }
-defineProps<propType>()
+const props = defineProps<propType>()
+
+const songNameRef = ref()
+const songNameWidth = ref(0)
+watch(() => props.songName, () => {
+  nextTick(() => {
+    songNameWidth.value = songNameRef.value?.offsetWidth
+  })
+}, { immediate: true })
+
+const subSongNameStyle = computed(() => ({ width: `${songNameWidth.value}px` }))
 </script>
 
 <template>
   <div
     flex="~"
-    w-600px
-    h-200px
+    w-1200px
+    h-400px
   >
     <div flex="~ col" items-end>
-      <span font="bold">{{ songName }}</span>
-      <span text-xs>{{ player }}</span>
+      <span
+        ref="songNameRef"
+        text-xl
+        font="bold tianshi-blue">
+        {{ songName }}
+      </span>
+      <span
+        :style="subSongNameStyle"
+        text-xs
+        color-violet-400
+        whitespace-nowrap
+        overflow-hidden
+      >
+      {{ subSongName }}
+      </span>
+      <span text-lg font-tianshi-pink>{{ player }}</span>
     </div>
     <div>
-      <span>进度条:{{ progress }}</span>
+      <span>进度条:{{ progress || 0 }}</span>
       <span>{{ isPlaying }}</span>
     </div>
   </div>

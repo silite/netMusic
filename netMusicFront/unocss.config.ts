@@ -20,6 +20,18 @@ export default defineConfig({
         'font-family': 'zpix, \'Josefin Sans\', -apple-system, \'PingFang SC\', \'Hiragino Sans GB\', \'Microsoft Yahei\', \'WenQuanYi Micro Hei\', \'ST Heiti\', sans-serif',
       },
     ],
+    [
+      'font-tianshi-blue',
+      {
+        color: '#617cc7',
+      },
+    ],
+    [
+      'font-tianshi-pink',
+      {
+        color: '#dfaedf',
+      },
+    ],
   ],
   presets: [
     presetUno(),

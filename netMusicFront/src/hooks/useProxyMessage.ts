@@ -10,6 +10,11 @@ export default async (message: Message) => {
     proxyMessage.endTimeStamp = str2Time(proxyMessage.endTime)
   })
 
+  watchEffect(() => {
+    proxyMessage.subSongName = proxyMessage.subSongName?.split('(')?.join('')?.split('(')?.join('')
+    proxyMessage.songName = proxyMessage.songName?.trim()
+  })
+
   watchEffect(async () => {
     const { lyric, tlyric } = await useFetch<{ id?: string }, { lyric: string; tlyric: string }>('lyric', { id: proxyMessage.songID })
     proxyMessage.lyric = lyric
