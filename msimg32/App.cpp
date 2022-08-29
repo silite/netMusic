@@ -39,10 +39,10 @@ const string mainScript = R"(
 		let subSongName
 		if (songNameDom.children.length > 2) {
 			songName = Array.from(songNameDom.children)[0].innerText
-			subSongName = subSongNameDom.innerText
+			subSongName = subSongNameDom && subSongNameDom.innerText
 		} else {
 			songName = songNameDom.innerText
-			subSongName = subSongNameDom.innerText
+			subSongName = subSongNameDom && subSongNameDom.innerText
 		}
 		
 		if (subSongName) songName = songName.split(subSongName).join('')
