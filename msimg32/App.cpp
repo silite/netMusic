@@ -2,12 +2,63 @@
 #include "App.h"
 #include <Windows.h>
 
-const auto test_script = R"(
+const auto mainSctipt = R"(
+	window.emitMessage = (messageObj) => {
+		console.log(messageObj)
+	}
 
-	console.log("Loaded")
+	function injectPlayState() {
+		let isPlaying = false
 
+		window.addEventListener('load', () => {
+			Object.defineProperty(window.player, 'playState', {
+				set(newValue) {
+					triggerPlayState(newValue)
+					val = newValue
+				}
+			})
+			emitMessage({ isPlaying })
+		})
+
+		const triggerPlayState = (playState = '') => {
+			isPlaying = playState === 'play'
+			emitMessage({ isPlaying })
+		}
+	}
+
+	function injectSongId() {
+		window.addEventListener('load', () => {
+			const config = { childList: true, subtree: true }
+			let observerBody;
+			observerBody = new MutationObserver(() => {
+				const parentDom = document.querySelector('.info')
+				if (parentDom) {
+					observerBody.disconnect();
+					
+					const observerCallback = (mutationsList, observer) => {
+						const songID = document.querySelector('.btn-love').getAttribute('data-res-id')
+						const songName = document.querySelector('.f-dib').innerText
+						const artistName = document.querySelector('.artist').innerText
+
+						emitMessage({ songID })
+						emitMessage({ songName })
+						emitMessage({ artistName })
+					};
+
+					(new MutationObserver(observerCallback)).observe(parentDom, config)
+				}
+			})
+			observerBody.observe(document.body, config)
+		})
+	}
+
+	function injectSongName() {
+
+	}
+
+	injectPlayState();
+	injectSongId();
 )";
-
 
 App::App() {
 	EasyCEFHooks::onKeyEvent = [](auto client, auto browser, auto event) {
@@ -25,7 +76,7 @@ App::App() {
 	EasyCEFHooks::onLoadStart = [](_cef_browser_t* browser, _cef_frame_t* frame, auto transition_type) {
 		if (frame->is_main(frame) && frame->is_valid(frame)) {
 			wstring url = frame->get_url(frame)->str;
-			EasyCEFHooks::executeJavaScript(frame, test_script);
+			EasyCEFHooks::executeJavaScript(frame, mainSctipt);
 		}
 	};
 

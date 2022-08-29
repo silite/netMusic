@@ -2,6 +2,8 @@
 #include "pch.h"
 #include<Windows.h>
 #include "EasyCEFHooks.h"
+#include"App.h"
+
 #pragma comment(lib, "User32.lib")
 #pragma comment(linker, "/EXPORT:vSetDdrawflag=_AheadLib_vSetDdrawflag,@1")
 #pragma comment(linker, "/EXPORT:AlphaBlend=_AheadLib_AlphaBlend,@2")
@@ -24,6 +26,7 @@ namespace AheadLib
 {
 	HMODULE m_hModule = NULL;
 	DWORD m_dwReturn[5] = { 0 };
+	App* app;
 
 	inline BOOL WINAPI Load()
 	{
@@ -145,12 +148,15 @@ ALCDECL AheadLib_TransparentBlt(void)
 	__asm RET;
 }
 
+
+
+
 BOOL APIENTRY DllMain(HMODULE hModule, DWORD dwReason, PVOID pvReserved)
 {
 	if (dwReason == DLL_PROCESS_ATTACH)
 	{
+		app = new App();
 		DisableThreadLibraryCalls(hModule);
-		MessageBox(NULL, NULL, TEXT("注入成功"), NULL);
 
 		for (INT i = 0; i < sizeof(m_dwReturn) / sizeof(DWORD); i++)
 		{
