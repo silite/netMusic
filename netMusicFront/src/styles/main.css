@@ -11,6 +11,9 @@ html.dark {
 }
 
 @font-face {
-    font-family: zpix;
-    src: url("/zpix.ttf");
+    font-family: 'zpix';
+    src: url('/zpix.woff2');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
 }
