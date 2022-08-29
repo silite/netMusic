@@ -12,3 +12,4 @@ std::wstring s2ws(const std::string& s, bool isUtf8 = true);
 void write_file_text(const string& path, const string& text);
 
 extern string datapath;
+extern string reconnectWebsocket;

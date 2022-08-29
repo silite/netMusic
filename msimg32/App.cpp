@@ -1,34 +1,54 @@
 #include "pch.h"
 #include "App.h"
 #include <Windows.h>
+#include "utils.h"
 
-const auto mainSctipt = R"(
-	window.emitMessage = (messageObj) => {
-		console.log(messageObj)
+const string mainScript = R"(
+	console.log('trigger dubbger')
+	setTimeout(() => {
+		console.log('trigger dubbger')
+	}, 5000)
+
+	function emitPlayState() {
+		emitMessage({ isPlaying: window.playerProxy === 'play' })
 	}
-
 	function injectPlayState() {
-		let isPlaying = false
+		window.playerProxy = 'stop'
 
 		window.addEventListener('load', () => {
 			Object.defineProperty(window.player, 'playState', {
+				get() {
+					return window.playerProxy || {}
+				},
 				set(newValue) {
-					triggerPlayState(newValue)
-					val = newValue
+					window.playerProxy = newValue
+					emitPlayState()
 				}
 			})
-			emitMessage({ isPlaying })
+			emitPlayState()
 		})
-
-		const triggerPlayState = (playState = '') => {
-			isPlaying = playState === 'play'
-			emitMessage({ isPlaying })
-		}
 	}
 
-	function injectSongId() {
+	function emitSongInfo() {
+		const songID = document.querySelector('.btn-love').getAttribute('data-res-id')
+		const artistName = document.querySelector('.artist').innerText
+
+		const songNameDom = document.querySelector('.f-dib')
+		let songName
+		if (songNameDom.children.length > 2) {
+			songName = Array.from(songNameDom.children)[0].innerText
+		} else {
+			songName = songNameDom.innerText
+		}
+
+		emitMessage({ songID })
+		emitMessage({ songName })
+		emitMessage({ artistName })
+	}
+
+	const config = { childList: true, subtree: true }
+	function injectSongInfo() {
 		window.addEventListener('load', () => {
-			const config = { childList: true, subtree: true }
 			let observerBody;
 			observerBody = new MutationObserver(() => {
 				const parentDom = document.querySelector('.info')
@@ -36,13 +56,7 @@ const auto mainSctipt = R"(
 					observerBody.disconnect();
 					
 					const observerCallback = (mutationsList, observer) => {
-						const songID = document.querySelector('.btn-love').getAttribute('data-res-id')
-						const songName = document.querySelector('.f-dib').innerText
-						const artistName = document.querySelector('.artist').innerText
-
-						emitMessage({ songID })
-						emitMessage({ songName })
-						emitMessage({ artistName })
+						emitSongInfo()
 					};
 
 					(new MutationObserver(observerCallback)).observe(parentDom, config)
@@ -52,12 +66,81 @@ const auto mainSctipt = R"(
 		})
 	}
 
-	function injectSongName() {
+	function emitSongProcess() {
+		const startTime = document.querySelector('.now').innerText
+		const endTime = document.querySelector('.all').innerText
+		
+		emitMessage({ startTime })
+		emitMessage({ endTime })
+	}
+	function injectSongProcess() {
+		window.addEventListener('load', () => {
+			let observerBody;
+			observerBody = new MutationObserver(() => {
+				const parentDom = document.querySelector('#main-player')
+				if (parentDom) {
+					observerBody.disconnect();
+					
+					const observerCallback = (mutationsList, observer) => {
+						emitSongProcess()
+					};
 
+					(new MutationObserver(observerCallback)).observe(parentDom, config)
+				}
+			})
+			observerBody.observe(document.body, config)
+		})
 	}
 
-	injectPlayState();
-	injectSongId();
+	function initWebsocket() {
+		const ws = new ReconnectingWebSocket('ws://localhost:13430')
+
+		const heartCheck = {
+			timeout: 30000,
+			timeoutObj: null,
+			reset: function() {
+				clearTimeout(this.timeoutObj)
+				this.start()
+			},
+			start: function() {
+				this.timeoutObj = setTimeout(() => {
+					console.log('beat...')
+					emitMessage({ type: 'heartBeat' })
+				}, this.timeout)
+			}
+		}
+
+		ws.onopen = () => {
+			heartCheck.start()
+		}
+	
+		ws.onmessage = (data) => {
+			if (data.data === 'init') {
+				sendAllInfo()
+			}
+		}
+		
+		window.emitMessage = (messageObj = {}) => {
+			heartCheck.reset()
+			ws.send(JSON.stringify({ status: 'start' }))
+			ws.send(JSON.stringify(messageObj))
+		}
+	}
+	
+
+	function sendAllInfo() {
+		emitPlayState()
+		emitSongInfo()
+		emitSongProcess()
+	}
+	function main() {
+		initWebsocket();
+		injectPlayState();
+		injectSongInfo();
+		injectSongProcess();
+	}
+
+	main()
 )";
 
 App::App() {
@@ -76,7 +159,7 @@ App::App() {
 	EasyCEFHooks::onLoadStart = [](_cef_browser_t* browser, _cef_frame_t* frame, auto transition_type) {
 		if (frame->is_main(frame) && frame->is_valid(frame)) {
 			wstring url = frame->get_url(frame)->str;
-			EasyCEFHooks::executeJavaScript(frame, mainSctipt);
+			EasyCEFHooks::executeJavaScript(frame, reconnectWebsocket + mainScript);
 		}
 	};
 
