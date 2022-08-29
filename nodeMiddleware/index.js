@@ -50,14 +50,14 @@ function startNetToMiddlewareProxy() {
     socket.on('message', (data) => {
       try {
         const msg = data.toString()
-        toFrontSocket.send(msg)
+        toFrontSocket?.send(msg)
       } catch (e) {
         console.error(e)
       }
     });
 
     socket.on('close', () => {
-      toFrontSocket.send(JSON.stringify({ status: 'stop' }))
+      toFrontSocket?.send(JSON.stringify({ status: 'stop' }))
     })
 
     socket.on('error', (error) => {
@@ -76,7 +76,7 @@ function startMiddlewareToFront() {
 
     socket.on('message', (data) => {
       if (data.toString() === 'init') {
-        toNetSocket.send('init')
+        toNetSocket?.send('init')
       }
     });
 
