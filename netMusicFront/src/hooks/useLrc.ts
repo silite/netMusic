@@ -4,6 +4,7 @@ type lines = Parameters<ConstructorParameters<typeof Lyric>[0]['onSetLyric']>[0]
 
 export default (message: Message) => {
   const currentLrc = ref<{ line?: Number; text?: { curr?: string; next?: string }; lrcLines?: lines }>({})
+  const currentSongId = ref<string>()
 
   const getLrcParser = () => {
     return new Lyric({
@@ -39,12 +40,18 @@ export default (message: Message) => {
   })
 
   watchEffect(() => {
+    currentSongId.value = message.songID
     lrcParser.setLyric(message.lyric || '', [message.tlyric || ''])
   })
 
   watchEffect(() => {
+    if (currentSongId.value !== message.songID) {
+      currentLrc.value = {}
+      lrcParser = getLrcParser()
+    }
+
     if (message.isPlaying === true)
-      lrcParser.play((message.startTimeStamp || 0) * 1000)
+      lrcParser.play((message.current || 0) * 1000)
     else lrcParser.pause()
   })
 

@@ -1,14 +1,8 @@
 import useFetch from './useFetch'
 import type { Message } from '~/types/common'
-import { str2Time } from '~/utils/common'
 
 export default async (message: Message) => {
   const proxyMessage = reactive(message)
-
-  watchEffect(() => {
-    proxyMessage.startTimeStamp = str2Time(proxyMessage.startTime)
-    proxyMessage.endTimeStamp = str2Time(proxyMessage.endTime)
-  })
 
   watchEffect(() => {
     proxyMessage.subSongName = proxyMessage.subSongName?.split('(')?.join('')?.split('(')?.join('')

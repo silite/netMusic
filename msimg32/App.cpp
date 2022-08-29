@@ -73,29 +73,12 @@ const string mainScript = R"(
 		})
 	}
 
-	function emitSongProcess() {
-		const startTime = document.querySelector('.now').innerText
-		const endTime = document.querySelector('.all').innerText
-		
-		emitMessage({ startTime })
-		emitMessage({ endTime })
-	}
 	function injectSongProcess() {
 		window.addEventListener('load', () => {
-			let observerBody;
-			observerBody = new MutationObserver(() => {
-				const parentDom = document.querySelector('#main-player')
-				if (parentDom) {
-					observerBody.disconnect();
-					
-					const observerCallback = (mutationsList, observer) => {
-						emitSongProcess()
-					};
-
-					(new MutationObserver(observerCallback)).observe(parentDom, config)
-				}
+			ctl.cefPlayer.CK.onpositionchange.push(({ current, duration } = {}) => {
+				emitMessage({ current })
+				emitMessage({ duration })
 			})
-			observerBody.observe(document.body, config)
 		})
 	}
 
@@ -138,7 +121,6 @@ const string mainScript = R"(
 	function sendAllInfo() {
 		emitPlayState()
 		emitSongInfo()
-		emitSongProcess()
 	}
 	function main() {
 		initWebsocket();

@@ -1,2 +1,2 @@
-export type WsKey = 'songID' | 'songName' | 'subSongName' | 'artistName' | 'startTime' | 'endTime' | 'status' | 'lyric' | 'tlyric'
-export type Message = Partial<Record<WsKey, string>> & Partial<{ startTimeStamp: number; endTimeStamp: number }> & { isPlaying?: boolean }
+export type WsKey = 'songID' | 'songName' | 'subSongName' | 'artistName' | 'status' | 'lyric' | 'tlyric'
+export type Message = Partial<Record<WsKey, string>> & Partial<{ current: number; duration: number }> & { isPlaying?: boolean }
