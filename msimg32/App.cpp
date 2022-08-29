@@ -34,15 +34,22 @@ const string mainScript = R"(
 		const artistName = document.querySelector('.artist').innerText
 
 		const songNameDom = document.querySelector('.f-dib')
+		const subSongNameDom = songNameDom.querySelector('.s-fc4')
 		let songName
+		let subSongName
 		if (songNameDom.children.length > 2) {
 			songName = Array.from(songNameDom.children)[0].innerText
+			subSongName = subSongNameDom.innerText
 		} else {
 			songName = songNameDom.innerText
+			subSongName = subSongNameDom.innerText
 		}
+		
+		if (subSongName) songName = songName.split(subSongName).join('')
 
 		emitMessage({ songID })
 		emitMessage({ songName })
+		emitMessage({ subSongName })
 		emitMessage({ artistName })
 	}
 
