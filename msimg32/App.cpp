@@ -4,10 +4,14 @@
 #include "utils.h"
 
 const string mainScript = R"(
-	console.log('trigger dubbger')
-	setTimeout(() => {
-		console.log('trigger dubbger')
-	}, 5000)
+	function getCtlCallbackFuncName() {
+		window.addEventListener('load', () => {
+			for (let [key, val] of Object.entries(ctl.cefPlayer)) {
+				if (val instanceof Object && Object.keys(val).includes('onpositionchange'))
+					window.cefCallBackFuncName = key
+			}
+		})
+	}
 
 	function emitPlayState() {
 		emitMessage({ isPlaying: window.playerProxy === 'play' })
@@ -75,7 +79,7 @@ const string mainScript = R"(
 
 	function injectSongProcess() {
 		window.addEventListener('load', () => {
-			ctl.cefPlayer.CK.onpositionchange.push(({ current, duration } = {}) => {
+			ctl.cefPlayer[cefCallBackFuncName].onpositionchange.push(({ current, duration } = {}) => {
 				emitMessage({ current })
 				emitMessage({ duration })
 			})
@@ -123,6 +127,7 @@ const string mainScript = R"(
 		emitSongInfo()
 	}
 	function main() {
+		getCtlCallbackFuncName();
 		initWebsocket();
 		injectPlayState();
 		injectSongInfo();

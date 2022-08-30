@@ -5,7 +5,7 @@ export default async (message: Message) => {
   const proxyMessage = reactive(message)
 
   watchEffect(() => {
-    proxyMessage.subSongName = proxyMessage.subSongName?.split('(')?.join('')?.split('(')?.join('')
+    proxyMessage.subSongName = proxyMessage.subSongName?.split('(')?.join('')?.split(')')?.join('')
     proxyMessage.songName = proxyMessage.songName?.trim()
   })
 

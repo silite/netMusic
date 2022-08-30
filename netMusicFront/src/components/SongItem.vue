@@ -38,6 +38,7 @@ const subSongNameStyle = computed(() => ({ width: `${songNameWidth.value}px` }))
         color-violet-400
         whitespace-nowrap
         overflow-hidden
+        text-right
       >
       {{ subSongName }}
       </span>
