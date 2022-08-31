@@ -35,18 +35,25 @@ const string mainScript = R"(
 
 	function emitSongInfo() {
 		const songID = document.querySelector('.btn-love').getAttribute('data-res-id')
-		const artistName = document.querySelectorAll('.j-title')[1].innerText
+		const artistDom = document.querySelectorAll('.j-title')[1].children[0]
 
 		const songNameDom = document.querySelector('.f-dib')
 		const subSongNameDom = songNameDom.querySelector('.s-fc4')
 		let songName
 		let subSongName
 		if (songNameDom.children.length > 2) {
-			songName = Array.from(songNameDom.children)[0].innerText
+			songName = songNameDom.children[0].innerText
 			subSongName = subSongNameDom && subSongNameDom.innerText
 		} else {
 			songName = songNameDom.innerText
 			subSongName = subSongNameDom && subSongNameDom.innerText
+		}
+
+		let artistName
+		if (artistDom.children.length > 2) {
+			artistName = artistDom.children[0].innerText
+		} else {
+			artistName = artistDom.innerText
 		}
 		
 		if (subSongName) songName = songName.split(subSongName).join('')
@@ -146,24 +153,34 @@ const string styleScript = R"(
 	}
 
 	window.addEventListener('load', () => {
-		document.querySelector('.logo2').remove()
-		document.querySelector('.logo1').style.paddingLeft = '10px'
-		document.querySelector('.m-leftbox').style.left = '40px';
-		const targetDom = document.querySelector('.m-topbox.j-topbox')
+		let observerBody;
+		observerBody = new MutationObserver(() => {
+			const targetDom = document.querySelector('.m-topbox.j-topbox')
+			if (targetDom) {
+				observerBody.disconnect();
+					
+				document.querySelector('.logo2').remove()
+				document.querySelector('.logo1').style.paddingLeft = '10px'
+				document.querySelector('.m-leftbox').style.left = '40px';
 		
-		const lrcBotSwitch = createSwitch()
-		const switchRef = lrcBotSwitch.querySelector('input')
-		switchRef.checked = window.lrcStatus = true
-		emitMessage({ lrsStatus: true })
-		lrcBotSwitch.addEventListener('click', (event) => {
-			if (event.target.type !== 'checkbox') return
-			const lrcStatus = window.lrcStatus = event.target.checked
-			customToast(lrcStatus ? 'lrc start' : 'lrc stop')
-			emitMessage({ lrcStatus })
-		})
+		
+				const lrcBotSwitch = createSwitch()
+				const switchRef = lrcBotSwitch.querySelector('input')
+				switchRef.checked = window.lrcStatus = true
+				emitMessage({ lrcStatus: true })
+				lrcBotSwitch.addEventListener('click', (event) => {
+					if (event.target.type !== 'checkbox') return
+					const lrcStatus = window.lrcStatus = event.target.checked
+					customToast(lrcStatus ? 'lrc start' : 'lrc stop')
+					emitMessage({ lrcStatus })
+				})
 
-		injectCss(lrcBotSwitch, { paddingLeft: '10px', transform: 'scale(0.5)' })
-		targetDom.appendChild(lrcBotSwitch)
+				injectCss(lrcBotSwitch, { paddingLeft: '10px', transform: 'scale(0.5)' })
+				targetDom.appendChild(lrcBotSwitch)
+
+			}
+		})
+		observerBody.observe(document.body, config)
 	});
 )";
 
