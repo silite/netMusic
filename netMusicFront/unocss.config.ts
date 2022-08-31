@@ -23,13 +23,13 @@ export default defineConfig({
     [
       'font-tianshi-blue',
       {
-        color: '#617cc7',
+        color: '#92abf5',
       },
     ],
     [
       'font-tianshi-pink',
       {
-        color: '#dfaedf',
+        color: '#d98dd9',
       },
     ],
   ],

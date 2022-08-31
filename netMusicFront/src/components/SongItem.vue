@@ -26,15 +26,6 @@ onMounted(() => {
     }, { immediate: true })
   })
 })
-const progressContentStyle = computed(() => ({ height: `${infoHeight.value}px` }))
-
-const getPositiveNum = (num: number) => {
-  return num < 0 ? 0 : num
-}
-const imgStyle = computed(() => {
-  const val = getPositiveNum((infoHeight.value || 0) - 20)
-  return { width: `${val}px`, height: `${val}px` }
-})
 
 const progressInstance = ref()
 onMounted(() => {
@@ -42,7 +33,7 @@ onMounted(() => {
     strokeWidth: 6,
     easing: 'easeInOut',
     duration: 1000,
-    color: '#ffecc0',
+    color: '#fcbbc5',
     trailColor: 'transparent',
     trailWidth: 1,
     svgStyle: null,
@@ -87,115 +78,124 @@ const playTime = computed(() => Math.max(props.songName?.length || 0, props.subS
 <template>
   <div
     flex="~"
+    items-center
     max-w-400px
   >
     <div
-      :style="progressContentStyle"
+      w-60px
+      h-60px
       flex
+      mr-8px
+      shrink-0
+      justify-center
       items-center
-      pr-4
     >
-      <img src="/logo.png" rounded-full absolute left-5px :style="imgStyle">
-      <div id="progress" />
+      <img src="/logo.png" rounded-full absolute left-8px w-45px h-45px>
+      <div id="progress" w-55px h-55px />
     </div>
     <div ref="infoRef" flex="~ col" justify-center overflow-hidden>
-      <div
-        id="songName"
-        flex="~"
-        :style="{
-          animation: playLoopAnime('songName') ? `${playTime}s wordsLoops 3s infinite` : '',
-          justifyContent: maxWidthInfo.key !== 'songName' ? 'flex-end' : '',
-        }"
-      >
-        <span
-          text-xl
-          whitespace-nowrap
-          pl-1
-          font="bold tianshi-blue"
-          :style="{
-            textShadow: 'rgb(137 166 233) -1px 1px 0px, rgb(169 82 118 / 55%) 1px 1px 0px',
-          }"
-        >
-          {{ songName }}
-        </span>
-        <span
-          v-if="playLoopAnime('songName')"
-          text-xl
-          whitespace-nowrap
-          pl-1
-          font="bold tianshi-blue"
-          :style="{
-            textShadow: 'rgb(137 166 233) -1px 1px 0px, rgb(169 82 118 / 55%) 1px 1px 0px',
-          }"
-        >
-          {{ songName }}
-        </span>
-      </div>
-
-      <div
-        id="subSongName"
-        flex="~"
-        :style="{
-          animation: playLoopAnime('subSongName') ? `${playTime}s wordsLoops 3s infinite` : '',
-          justifyContent: maxWidthInfo.key !== 'subSongName' ? 'flex-end' : '',
-        }"
-      >
+      <transition>
         <div
-          text-sm
-          color-violet-400
-          whitespace-nowrap
-          overflow-hidden
-          pt-1
-          pl-1
+          v-if="songName"
+          id="songName"
+          flex="~"
           :style="{
-            textShadow: '-1px 1px 0 #89a6e9, 1px 1px 0 #fb86b78c',
+            animation: playLoopAnime('songName') ? `${playTime}s wordsLoops 3s infinite` : '',
+            justifyContent: maxWidthInfo.key !== 'songName' ? 'flex-end' : '',
           }"
-          style="text-shadow: -1px 1px 0 #89a6e9, 1px 1px 0 #fb86b78c;"
         >
-          {{ subSongName }}
+          <span
+            text-xl
+            whitespace-nowrap
+            pl-1
+            font="bold tianshi-blue"
+            :style="{
+              textShadow: 'rgb(250 243 251) -1px 1px 0px, rgb(199 210 229 / 55%) 1px 1px 0px',
+            }"
+          >
+            {{ songName }}
+          </span>
+          <span
+            v-if="playLoopAnime('songName')"
+            text-xl
+            whitespace-nowrap
+            pl-1
+            font="bold tianshi-blue"
+            :style="{
+              textShadow: 'rgb(250 243 251) -1px 1px 0px, rgb(199 210 229 / 55%) 1px 1px 0px',
+            }"
+          >
+            {{ songName }}
+          </span>
         </div>
-        <span
-          v-if="playLoopAnime('subSongName')"
-          text-sm
-          color-violet-400
-          whitespace-nowrap
-          overflow-hidden
-          pt-1
-          pl-1
-          style="text-shadow: -1px 1px 0 #89a6e9, 1px 1px 0 #fb86b78c;"
-        >
-          {{ subSongName }}
-        </span>
-      </div>
+      </transition>
 
-      <div
-        id="player"
-        flex="~"
-        :style="{
-          animation: playLoopAnime('player') ? `${playTime}s wordsLoops 3s infinite` : '',
-          justifyContent: maxWidthInfo.key !== 'player' ? 'flex-end' : '',
-        }"
-      >
-        <span
-          text-lg
-          pl-1
-          whitespace-nowrap
-          font-tianshi-pink
-          text-right
+      <transition>
+        <div
+          v-if="subSongName"
+          id="subSongName"
+          flex="~"
           :style="{
-            textShadow: '-1px 1px 0 #abc4fd, 1px 1px 0 #b7c5df8c',
+            animation: playLoopAnime('subSongName') ? `${playTime}s wordsLoops 3s infinite` : '',
+            justifyContent: maxWidthInfo.key !== 'subSongName' ? 'flex-end' : '',
           }"
-        >{{ player }}</span>
-        <span
-          v-if="playLoopAnime('player')"
-          text-lg
-          pl-1
-          whitespace-nowrap
-          font-tianshi-pink
-          text-right
-          style="text-shadow: -1px 1px 0 #abc4fd, 1px 1px 0 #b7c5df8c;"
-        >{{ player }}</span>
-      </div>
+        >
+          <div
+            text-sm
+            whitespace-nowrap
+            overflow-hidden
+            pl-1
+            :style="{
+              textShadow: 'rgb(207 218 245) -1px 1px 0px, rgb(189 232 237 / 55%) 1px 1px 0px;',
+              color: 'rgb(240, 176, 219)',
+            }"
+          >
+            {{ subSongName }}
+          </div>
+          <span
+            v-if="playLoopAnime('subSongName')"
+            text-sm
+            whitespace-nowrap
+            overflow-hidden
+            pl-1
+            style="text-shadow: rgb(207 218 245) -1px 1px 0px, rgb(189 232 237 / 55%) 1px 1px 0px; color: rgb(240, 176, 219);"
+          >
+            {{ subSongName }}
+          </span>
+        </div>
+      </transition>
+
+      <transition>
+        <div
+          v-if="player"
+          id="player"
+          flex="~"
+          :style="{
+            animation: playLoopAnime('player') ? `${playTime}s wordsLoops 3s infinite` : '',
+            justifyContent: maxWidthInfo.key !== 'player' ? 'flex-end' : '',
+          }"
+        >
+          <span
+            text-lg
+            pl-1
+            whitespace-nowrap
+            font-tianshi-pink
+            text-right
+            :style="{
+              textShadow: 'rgb(158 176 217) -1px 1px 0px, rgb(183 197 223 / 55%) 1px 1px 0px',
+            }"
+          >{{ player }}</span>
+          <span
+            v-if="playLoopAnime('player')"
+            text-lg
+            pl-1
+            whitespace-nowrap
+            font-tianshi-pink
+            text-right
+            style="text-shadow: rgb(158 176 217) -1px 1px 0px, rgb(183 197 223 / 55%) 1px 1px 0px;"
+          >{{ player }}</span>
+        </div>
+      </transition>
     </div>
   </div>
 </template>
