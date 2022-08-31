@@ -35,7 +35,7 @@ const string mainScript = R"(
 
 	function emitSongInfo() {
 		const songID = document.querySelector('.btn-love').getAttribute('data-res-id')
-		const artistName = document.querySelector('.artist').innerText
+		const artistName = document.querySelectorAll('.j-title')[1].innerText
 
 		const songNameDom = document.querySelector('.f-dib')
 		const subSongNameDom = songNameDom.querySelector('.s-fc4')
@@ -99,7 +99,7 @@ const string mainScript = R"(
 			start: function() {
 				this.timeoutObj = setTimeout(() => {
 					console.log('beat...')
-					emitMessage({ type: 'heartBeat' })
+					sendAllInfo()
 				}, this.timeout)
 			}
 		}
@@ -125,6 +125,7 @@ const string mainScript = R"(
 	function sendAllInfo() {
 		emitPlayState()
 		emitSongInfo()
+		emitMessage({ lrcStatus: window.lrcStatus })
 	}
 	function main() {
 		getCtlCallbackFuncName();
@@ -134,7 +135,36 @@ const string mainScript = R"(
 		injectSongProcess();
 	}
 
-	main()
+	main();
+)";
+
+const string styleScript = R"(
+	window.injectCss = function(dom, style) {
+		for (let [key, value] of Object.entries(style)) {
+			dom.style[key] = value
+		}
+	}
+
+	window.addEventListener('load', () => {
+		document.querySelector('.logo2').remove()
+		document.querySelector('.logo1').style.paddingLeft = '10px'
+		document.querySelector('.m-leftbox').style.left = '40px';
+		const targetDom = document.querySelector('.m-topbox.j-topbox')
+		
+		const lrcBotSwitch = createSwitch()
+		const switchRef = lrcBotSwitch.querySelector('input')
+		switchRef.checked = window.lrcStatus = true
+		emitMessage({ lrsStatus: true })
+		lrcBotSwitch.addEventListener('click', (event) => {
+			if (event.target.type !== 'checkbox') return
+			const lrcStatus = window.lrcStatus = event.target.checked
+			customToast(lrcStatus ? 'lrc start' : 'lrc stop')
+			emitMessage({ lrcStatus })
+		})
+
+		injectCss(lrcBotSwitch, { paddingLeft: '10px', transform: 'scale(0.5)' })
+		targetDom.appendChild(lrcBotSwitch)
+	});
 )";
 
 App::App() {
@@ -153,7 +183,7 @@ App::App() {
 	EasyCEFHooks::onLoadStart = [](_cef_browser_t* browser, _cef_frame_t* frame, auto transition_type) {
 		if (frame->is_main(frame) && frame->is_valid(frame)) {
 			wstring url = frame->get_url(frame)->str;
-			EasyCEFHooks::executeJavaScript(frame, reconnectWebsocket + mainScript);
+			EasyCEFHooks::executeJavaScript(frame, reconnectWebsocket + mainScript + switchInput + customToast + styleScript);
 		}
 	};
 

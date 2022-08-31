@@ -63,20 +63,35 @@ watch(() => props.progress, () => {
       <div id="progress" :style="progressStyle" />
     </div>
     <div ref="infoRef" flex="~ col" items-end justify-center>
-      <span
-        ref="songNameRef"
-        text-xl
-        overflow-hidden
-        whitespace-nowrap
-        pl-1
-        font="bold tianshi-blue"
-        :style="{
-          maxWidth: '320px',
-          textShadow: 'rgb(137 166 233) -1px 1px 0px, rgb(169 82 118 / 55%) 1px 1px 0px',
-        }"
+      <div
+        flex="~"
+        transition="all-300"
+        :style="{ animation: '15s wordsLoops 3s infinite' }"
       >
-        {{ songName }}
-      </span>
+        <span
+          text-xl
+          whitespace-nowrap
+          pl-1
+          font="bold tianshi-blue"
+          :style="{
+            textShadow: 'rgb(137 166 233) -1px 1px 0px, rgb(169 82 118 / 55%) 1px 1px 0px',
+          }"
+        >
+          {{ songName }}
+        </span>
+        <span
+          text-xl
+          whitespace-nowrap
+          pl-1
+          font="bold tianshi-blue"
+          :style="{
+            textShadow: 'rgb(137 166 233) -1px 1px 0px, rgb(169 82 118 / 55%) 1px 1px 0px',
+          }"
+        >
+          {{ songName }}
+        </span>
+      </div>
+
       <span
         text-xs
         color-violet-400
@@ -97,7 +112,7 @@ watch(() => props.progress, () => {
   </div>
 </template>
 
-<style scoped>
+<style>
 @keyframes wordsLoops {
     0% {
         transform: translate3d(0, 0, 0);

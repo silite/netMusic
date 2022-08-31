@@ -11,6 +11,7 @@
     justify-center
     text-2xl
     tracking-widest
+    style="text-shadow: rgb(141 164 217) -1px 1px 0px, rgb(169 82 118 / 55%) 1px 1px 0px;"
   >
    loading...
   </div>

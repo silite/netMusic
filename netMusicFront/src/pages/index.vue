@@ -15,6 +15,7 @@ const progress = useProgress(proxyMessage)
 
 <template>
   <transition name="fade">
+    <div v-if="message.lrcStatus">
     <div v-if="message.status !== 'start'" absolute>
       <LoadingItem />
     </div>
@@ -27,6 +28,7 @@ const progress = useProgress(proxyMessage)
         :isPlaying="proxyMessage.isPlaying"
       />
       <LrcItem :lrc="lrc" />
+    </div>
     </div>
   </transition>
 </template>

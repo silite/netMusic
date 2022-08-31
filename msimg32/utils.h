@@ -13,3 +13,5 @@ void write_file_text(const string& path, const string& text);
 
 extern string datapath;
 extern string reconnectWebsocket;
+extern string switchInput;
+extern string customToast;
