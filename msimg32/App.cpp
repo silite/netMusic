@@ -5,7 +5,7 @@
 
 const string mainScript = R"(
 	function getCtlCallbackFuncName() {
-		window.addEventListener('load', () => {
+		window.addEventListener('DOMContentLoaded', () => {
 			for (let [key, val] of Object.entries(ctl.cefPlayer)) {
 				if (val instanceof Object && Object.keys(val).includes('onpositionchange'))
 					window.cefCallBackFuncName = key
@@ -19,7 +19,7 @@ const string mainScript = R"(
 	function injectPlayState() {
 		window.playerProxy = 'stop'
 
-		window.addEventListener('load', () => {
+		window.addEventListener('DOMContentLoaded', () => {
 			Object.defineProperty(window.player, 'playState', {
 				get() {
 					return window.playerProxy || {}
@@ -66,7 +66,7 @@ const string mainScript = R"(
 
 	const config = { childList: true, subtree: true }
 	function injectSongInfo() {
-		window.addEventListener('load', () => {
+		window.addEventListener('DOMContentLoaded', () => {
 			let observerBody;
 			observerBody = new MutationObserver(() => {
 				const parentDom = document.querySelector('.info')
@@ -85,7 +85,7 @@ const string mainScript = R"(
 	}
 
 	function injectSongProcess() {
-		window.addEventListener('load', () => {
+		window.addEventListener('DOMContentLoaded', () => {
 			ctl.cefPlayer[cefCallBackFuncName].onpositionchange.push(({ current, duration } = {}) => {
 				emitMessage({ current })
 				emitMessage({ duration })
@@ -152,32 +152,38 @@ const string styleScript = R"(
 		}
 	}
 
-	window.addEventListener('load', () => {
+	console.log('test')
+	window.addEventListener('DOMContentLoaded', () => {
+		console.log('load')
 		let observerBody;
+		const trigger = () => {
+			document.querySelector('.logo2').remove()
+			document.querySelector('.logo1').style.paddingLeft = '10px'
+			document.querySelector('.m-leftbox').style.left = '40px';
+		
+		
+			const lrcBotSwitch = createSwitch()
+			const switchRef = lrcBotSwitch.querySelector('input')
+			switchRef.checked = window.lrcStatus = true
+			emitMessage({ lrcStatus: true })
+			lrcBotSwitch.addEventListener('click', (event) => {
+				if (event.target.type !== 'checkbox') return
+				const lrcStatus = window.lrcStatus = event.target.checked
+				customToast(lrcStatus ? 'lrc start' : 'lrc stop')
+				emitMessage({ lrcStatus })
+			})
+
+			injectCss(lrcBotSwitch, { paddingLeft: '10px', transform: 'scale(0.5)' })
+			document.querySelector('.m-topbox.j-topbox').appendChild(lrcBotSwitch)
+		}
+
+		if (document.querySelector('.m-topbox.j-topbox')) trigger()
+		
 		observerBody = new MutationObserver(() => {
-			const targetDom = document.querySelector('.m-topbox.j-topbox')
-			if (targetDom) {
+			if (document.querySelector('.m-topbox.j-topbox')) {
 				observerBody.disconnect();
-					
-				document.querySelector('.logo2').remove()
-				document.querySelector('.logo1').style.paddingLeft = '10px'
-				document.querySelector('.m-leftbox').style.left = '40px';
-		
-		
-				const lrcBotSwitch = createSwitch()
-				const switchRef = lrcBotSwitch.querySelector('input')
-				switchRef.checked = window.lrcStatus = true
-				emitMessage({ lrcStatus: true })
-				lrcBotSwitch.addEventListener('click', (event) => {
-					if (event.target.type !== 'checkbox') return
-					const lrcStatus = window.lrcStatus = event.target.checked
-					customToast(lrcStatus ? 'lrc start' : 'lrc stop')
-					emitMessage({ lrcStatus })
-				})
 
-				injectCss(lrcBotSwitch, { paddingLeft: '10px', transform: 'scale(0.5)' })
-				targetDom.appendChild(lrcBotSwitch)
-
+				trigger()
 			}
 		})
 		observerBody.observe(document.body, config)
