@@ -79,7 +79,8 @@ const playTime = computed(() => Math.max(props.songName?.length || 0, props.subS
   <div
     flex="~"
     items-center
-    max-w-400px
+    justify-center
+    max-w-380px
   >
     <div
       w-60px
@@ -89,6 +90,7 @@ const playTime = computed(() => Math.max(props.songName?.length || 0, props.subS
       shrink-0
       justify-center
       items-center
+      relative
     >
       <img src="/logo.png" rounded-full absolute left-8px w-45px h-45px>
       <div id="progress" w-55px h-55px />
@@ -143,10 +145,10 @@ const playTime = computed(() => Math.max(props.songName?.length || 0, props.subS
           <div
             text-sm
             whitespace-nowrap
-            overflow-hidden
+            shrink-0
             pl-1
             :style="{
-              textShadow: 'rgb(207 218 245) -1px 1px 0px, rgb(189 232 237 / 55%) 1px 1px 0px;',
+              textShadow: 'rgb(207 218 245) -1px 1px 0px, rgb(189 232 237 / 55%) 1px 1px 0px',
               color: 'rgb(240, 176, 219)',
             }"
           >
@@ -156,7 +158,7 @@ const playTime = computed(() => Math.max(props.songName?.length || 0, props.subS
             v-if="playLoopAnime('subSongName')"
             text-sm
             whitespace-nowrap
-            overflow-hidden
+            shrink-0
             pl-1
             style="text-shadow: rgb(207 218 245) -1px 1px 0px, rgb(189 232 237 / 55%) 1px 1px 0px; color: rgb(240, 176, 219);"
           >
@@ -179,6 +181,7 @@ const playTime = computed(() => Math.max(props.songName?.length || 0, props.subS
             text-lg
             pl-1
             whitespace-nowrap
+            shrink-0
             font-tianshi-pink
             text-right
             :style="{
@@ -190,6 +193,7 @@ const playTime = computed(() => Math.max(props.songName?.length || 0, props.subS
             text-lg
             pl-1
             whitespace-nowrap
+            shrink-0
             font-tianshi-pink
             text-right
             style="text-shadow: rgb(158 176 217) -1px 1px 0px, rgb(183 197 223 / 55%) 1px 1px 0px;"

@@ -6,6 +6,7 @@
     class="loading"
     flex="~"
     h-70px
+    w-350px
     pl-2
     items-center
     justify-center
