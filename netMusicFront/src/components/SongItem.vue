@@ -1,5 +1,8 @@
 <script setup lang="ts">
 import { Circle } from 'progressbar.js'
+import anime from 'animejs'
+import { getDomWidth } from '~/utils/common'
+
 interface propType {
   songName?: string
   player?: string
@@ -11,22 +14,25 @@ const props = defineProps<propType>()
 
 const infoRef = ref()
 const infoHeight = ref(0)
-watch(() => [props.songName, props.subSongName, props.player], () => {
-  nextTick(() => {
-    infoHeight.value = infoRef.value?.offsetHeight
+const infoWidth = ref(Infinity)
+onMounted(() => {
+  const font = new FontFace('zpix', 'url(zpix.woff2)')
+  font.load().then(() => {
+    watch(() => [props.songName, props.subSongName, props.player], () => {
+      nextTick(() => {
+        infoHeight.value = infoRef.value?.offsetHeight
+        infoWidth.value = infoRef.value?.offsetWidth
+      })
+    }, { immediate: true })
   })
-}, { immediate: true })
+})
+const progressContentStyle = computed(() => ({ height: `${infoHeight.value}px` }))
 
 const getPositiveNum = (num: number) => {
   return num < 0 ? 0 : num
 }
-const progressContentStyle = computed(() => ({ height: `${infoHeight.value}px` }))
 const imgStyle = computed(() => {
   const val = getPositiveNum((infoHeight.value || 0) - 20)
-  return { width: `${val}px`, height: `${val}px` }
-})
-const progressStyle = computed(() => {
-  const val = (infoHeight.value || 0) - 10
   return { width: `${val}px`, height: `${val}px` }
 })
 
@@ -42,10 +48,40 @@ onMounted(() => {
     svgStyle: null,
   })
 })
-
 watch(() => props.progress, () => {
   progressInstance.value?.animate(props.progress || 0)
 })
+
+const songNameWidth = ref<number>(0)
+watchEffect(async () => {
+  songNameWidth.value = await getDomWidth(props.songName || '', { fontSize: '1.25rem', lineHeight: '1.75rem' } as CSSStyleDeclaration) + 5
+})
+const subSongNameWidth = ref<number>(0)
+watchEffect(async () => {
+  subSongNameWidth.value = await getDomWidth(props.subSongName || '', { fontSize: '0.875rem', lineHeight: '1.25rem' } as CSSStyleDeclaration) + 5
+})
+const playerWidth = ref<number>(0)
+watchEffect(async () => {
+  playerWidth.value = await getDomWidth(props.player || '', { fontSize: '1.125rem', lineHeight: '1.75rem' } as CSSStyleDeclaration) + 5
+})
+
+const maxWidthInfo = computed(() => {
+  const resList = [{ songName: songNameWidth.value }, { subSongName: subSongNameWidth.value }, { player: playerWidth.value }]
+  let maxValue = 0
+  let maxKey
+  resList.forEach((item) => {
+    const [key, value] = Object.entries(item)[0]
+    if (maxValue < value) {
+      maxValue = value
+      maxKey = key
+    }
+  })
+  return { key: maxKey, value: maxValue }
+})
+
+const playLoopAnime = computed(() => (key: string) => maxWidthInfo.value.key === key && infoWidth.value + 5 < maxWidthInfo.value.value)
+const transformValue = computed(() => `-${maxWidthInfo.value.value}px`)
+const playTime = computed(() => Math.max(props.songName?.length || 0, props.subSongName?.length || 0, props.player?.length || 0))
 </script>
 
 <template>
@@ -59,14 +95,17 @@ watch(() => props.progress, () => {
       items-center
       pr-4
     >
-      <img src="/logo.png" :style="imgStyle" rounded-full absolute left-5px>
-      <div id="progress" :style="progressStyle" />
+      <img src="/logo.png" rounded-full absolute left-5px :style="imgStyle">
+      <div id="progress" />
     </div>
-    <div ref="infoRef" flex="~ col" items-end justify-center>
+    <div ref="infoRef" flex="~ col" justify-center overflow-hidden>
       <div
+        id="songName"
         flex="~"
-        transition="all-300"
-        :style="{ animation: '15s wordsLoops 3s infinite' }"
+        :style="{
+          animation: playLoopAnime('songName') ? `${playTime}s wordsLoops 3s infinite` : '',
+          justifyContent: maxWidthInfo.key !== 'songName' ? 'flex-end' : '',
+        }"
       >
         <span
           text-xl
@@ -80,6 +119,7 @@ watch(() => props.progress, () => {
           {{ songName }}
         </span>
         <span
+          v-if="playLoopAnime('songName')"
           text-xl
           whitespace-nowrap
           pl-1
@@ -92,22 +132,70 @@ watch(() => props.progress, () => {
         </span>
       </div>
 
-      <span
-        text-xs
-        color-violet-400
-        whitespace-nowrap
-        overflow-hidden
-        text-right
-        pt-1
-        style="text-shadow: -1px 1px 0 #89a6e9, 1px 1px 0 #fb86b78c;"
+      <div
+        id="subSongName"
+        flex="~"
+        :style="{
+          animation: playLoopAnime('subSongName') ? `${playTime}s wordsLoops 3s infinite` : '',
+          justifyContent: maxWidthInfo.key !== 'subSongName' ? 'flex-end' : '',
+        }"
       >
-        {{ subSongName }}
-      </span>
-      <span
-        text-lg
-        font-tianshi-pink
-        style="text-shadow: -1px 1px 0 #abc4fd, 1px 1px 0 #b7c5df8c;"
-      >{{ player }}</span>
+        <div
+          text-sm
+          color-violet-400
+          whitespace-nowrap
+          overflow-hidden
+          pt-1
+          pl-1
+          :style="{
+            textShadow: '-1px 1px 0 #89a6e9, 1px 1px 0 #fb86b78c',
+          }"
+          style="text-shadow: -1px 1px 0 #89a6e9, 1px 1px 0 #fb86b78c;"
+        >
+          {{ subSongName }}
+        </div>
+        <span
+          v-if="playLoopAnime('subSongName')"
+          text-sm
+          color-violet-400
+          whitespace-nowrap
+          overflow-hidden
+          pt-1
+          pl-1
+          style="text-shadow: -1px 1px 0 #89a6e9, 1px 1px 0 #fb86b78c;"
+        >
+          {{ subSongName }}
+        </span>
+      </div>
+
+      <div
+        id="player"
+        flex="~"
+        :style="{
+          animation: playLoopAnime('player') ? `${playTime}s wordsLoops 3s infinite` : '',
+          justifyContent: maxWidthInfo.key !== 'player' ? 'flex-end' : '',
+        }"
+      >
+        <span
+          text-lg
+          pl-1
+          whitespace-nowrap
+          font-tianshi-pink
+          text-right
+          :style="{
+            textShadow: '-1px 1px 0 #abc4fd, 1px 1px 0 #b7c5df8c',
+          }"
+        >{{ player }}</span>
+        <span
+          v-if="playLoopAnime('player')"
+          text-lg
+          pl-1
+          whitespace-nowrap
+          font-tianshi-pink
+          text-right
+          style="text-shadow: -1px 1px 0 #abc4fd, 1px 1px 0 #b7c5df8c;"
+        >{{ player }}</span>
+      </div>
     </div>
   </div>
 </template>
@@ -119,7 +207,7 @@ watch(() => props.progress, () => {
     }
 
     100% {
-        transform: translate3d(-50%, 0, 0);
+        transform: translate3d(v-bind(transformValue), 0, 0);
     }
 }
 </style>
