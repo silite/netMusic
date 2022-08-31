@@ -152,9 +152,7 @@ const string styleScript = R"(
 		}
 	}
 
-	console.log('test')
 	window.addEventListener('DOMContentLoaded', () => {
-		console.log('load')
 		let observerBody;
 		const trigger = () => {
 			document.querySelector('.logo2').remove()

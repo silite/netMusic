@@ -5,8 +5,8 @@
   <div
     class="loading"
     flex="~"
-    h-70px
-    w-350px
+    h-90px
+    w-380px
     pl-2
     items-center
     justify-center

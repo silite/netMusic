@@ -76,11 +76,13 @@ const playTime = computed(() => Math.max(props.songName?.length || 0, props.subS
 </script>
 
 <template>
-  <div
+  <div w-380px flex justify-center>
+    <div
     flex="~"
     items-center
     justify-center
     max-w-380px
+    h-90px
   >
     <div
       w-60px
@@ -96,7 +98,7 @@ const playTime = computed(() => Math.max(props.songName?.length || 0, props.subS
       <div id="progress" w-55px h-55px />
     </div>
     <div ref="infoRef" flex="~ col" justify-center overflow-hidden>
-      <transition>
+      <transition v-if="songName">
         <div
           v-if="songName"
           id="songName"
@@ -132,7 +134,7 @@ const playTime = computed(() => Math.max(props.songName?.length || 0, props.subS
         </div>
       </transition>
 
-      <transition>
+      <transition v-if="subSongName">
         <div
           v-if="subSongName"
           id="subSongName"
@@ -167,7 +169,7 @@ const playTime = computed(() => Math.max(props.songName?.length || 0, props.subS
         </div>
       </transition>
 
-      <transition>
+      <transition v-if="player">
         <div
           v-if="player"
           id="player"
@@ -201,6 +203,7 @@ const playTime = computed(() => Math.max(props.songName?.length || 0, props.subS
         </div>
       </transition>
     </div>
+  </div>
   </div>
 </template>
 
