@@ -49,6 +49,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <Library Include="cef\libcef.lib" />
+    <None Include="packages.config" />
   </ItemGroup>
 </Project>

@@ -1,0 +1,3 @@
+C:/Users/silite/Desktop/netMusic/msimg32/cmake-build-debug/CMakeFiles/msimg32_dll.dir
+C:/Users/silite/Desktop/netMusic/msimg32/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/silite/Desktop/netMusic/msimg32/cmake-build-debug/CMakeFiles/rebuild_cache.dir

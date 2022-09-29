@@ -1,0 +1,28 @@
+[package]
+authors = ["Steve Xiao (stevexmh@qq.com)"]
+edition = "2021"
+license = "MIT"
+name = "better-ncm"
+version = "0.1.0"
+
+[lib]
+name = "msimg32"
+crate-type = ["cdylib"]
+
+[features]
+default = ["example"]
+example = ["winapi/shellscalingapi"]
+
+[dependencies]
+# For Hook Usage
+win32-error = "0.9.0"
+easycefhooks = { path = "../easycefhooks" }
+winapi = {version = "0.3.9", features = ["minwindef", "winnt", "winuser", "libloaderapi", "sysinfoapi", "consoleapi"]}
+dirs = "4.0.0"
+urlencoding = "2.1.2"
+tinyjson = "2.3.0"
+httparse = "1.8.0"
+
+[build-dependencies]
+pelite = "0.9.0"
+winapi = {version = "0.3.9", features = ["sysinfoapi"]}

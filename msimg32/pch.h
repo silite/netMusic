@@ -23,4 +23,5 @@
 #include <codecvt>
 #include <Windows.h>
 #include <thread>
+#include <Shlwapi.h>
 #endif //PCH_H
