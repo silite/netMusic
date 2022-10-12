@@ -54,8 +54,13 @@ function cancelSong({ msg, shortName, uid }) {
 }
 
 async function orderSong(orderInfo) {
-  const { shortName, level, uid, userName, brandName, orderSongName } =
+  const { shortName, level, uid, userName, brandName, orderSongName, brandNum } =
     orderInfo
+
+  if (brandNum !== roomId) {
+    sendDanmu(`@${shortName} 粉丝牌可以点歌哦`)
+    return
+  }
 
   const { body } = await cloudsearch({
     keywords: orderSongName,
@@ -129,21 +134,16 @@ const start = () => {
       }
 
       const orderSongName = getOrderSongName(msg)
-
       if (orderSongName) {
-        if (brandNum !== global.ROOM_ID && !global.dev) {
-          sendDanmu(`@${shortName} 粉丝牌可以点歌哦`)
-          return
-        } else {
-          orderSong({
-            shortName,
-            level,
-            uid,
-            userName,
-            brandName,
-            orderSongName,
-          })
-        }
+        orderSong({
+          shortName,
+          level,
+          uid,
+          userName,
+          brandName,
+          orderSongName,
+          brandNum
+        })
       }
     } catch (e) {
       error(`e: ${e}, fun: start`)
