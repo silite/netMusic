@@ -6,6 +6,6 @@ echo Pending...
 @REM ping localhost -n 2
 
 del "Z:\CloudMusic\msimg32.dll"
-copy C:\Users\silite\Desktop\netMusic\msimg32\Debug\msimg32.dll "Z:\CloudMusic\msimg32.dll">nul
+copy C:\Users\silite\Desktop\netMusic\msimg32\Release\msimg32.dll "Z:\CloudMusic\msimg32.dll">nul
 
 Z:\CloudMusic\cloudmusic.exe

@@ -1,19 +1,18 @@
 const ws = require('ws');
 const { error } = require('./log');
 
-let toFrontSocket;
-let toNetSocket;
 function startNetToMiddlewareProxy() {
   const server = new ws.Server({
     port: 13430,
   });
 
   server.on('connection', (socket, req) => {
-    toNetSocket = socket;
+    global.toNetSocket = socket;
     socket.on('message', (data) => {
       try {
         const msg = data.toString()
-        toFrontSocket?.send(msg)
+        global.toFrontSocket?.send(msg)
+        global.netToMiddlewareMsgCB?.forEach(item => item(data))
       } catch (e) {
         error(`e: ${e}, 歌词中间件服务器13430`)
         console.error(e)
@@ -21,7 +20,7 @@ function startNetToMiddlewareProxy() {
     });
 
     socket.on('close', () => {
-      toFrontSocket?.send(JSON.stringify({ status: 'stop' }))
+      global.toFrontSocket?.send(JSON.stringify({ status: 'stop' }))
     })
 
     socket.on('error', (error) => {
@@ -36,11 +35,11 @@ function startMiddlewareToFront() {
   });
 
   websocketProxyServer.on('connection', (socket, req) => {
-    toFrontSocket = socket
+    global.toFrontSocket = socket
 
     socket.on('message', (data) => {
       if (data.toString() === 'init') {
-        toNetSocket?.send('init')
+        global.toNetSocket?.send('init')
       }
     });
 
