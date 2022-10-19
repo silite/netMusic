@@ -163,6 +163,7 @@ function addOrderListBtn() {
   div.appendChild(svg)
   div.setAttribute('style', 'height: 24px; width: 24px; right: 230px; transform: translateY(-50%); cursor: pointer;')
   div.setAttribute('title', '点歌列表')
+  div.setAttribute('id', 'order-icon')
   document.querySelector('#main-player').insertBefore(div, document.querySelector('.spk.f-vc.f-cp.j-vol'))
 
   div.addEventListener('click', () => {
@@ -177,7 +178,6 @@ function addOrderListBtn() {
 }
 
 window.addEventListener('load', () => {
-  addOrderListBtn()
 
   document.querySelector('.btnc.btnc-nxt').addEventListener('click', () => {
     try {
@@ -192,6 +192,19 @@ window.addEventListener('load', () => {
   })
 
   document.querySelector('.btnc.btnc-prv').addEventListener('click', () => { })
+
+  !window.orderSongStatusCB && (window.orderSongStatusCB = [])
+  window.orderSongStatusCB.push((value) => {
+    emitMessage({ orderSongStatus: value })
+    const orderIcon = document.querySelector('#order-icon')
+    const orderList = document.querySelector('#order-list')
+    if (value) {
+      addOrderListBtn()
+    }else {
+      orderIcon && orderIcon.remove()
+      orderList && orderList.remove()
+    }
+  })
 })
 
 export const startOrderSong = () => {

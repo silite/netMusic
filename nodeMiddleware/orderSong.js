@@ -6,10 +6,18 @@ const { roomId } = require('./loginConstant')
 
 const databaseName = 'orderSong.miko'
 
+let orderSongStatus = false
+
 if (!global.netToMiddlewareMsgCB) global.netToMiddlewareMsgCB = []
 global.netToMiddlewareMsgCB.push((data) => {
   try {
-    const { type, songId } = JSON.parse(data.toString())
+    const { type, songId, orderSongStatus: wsOrderSongStatus } = JSON.parse(data.toString())
+
+    if (!type) {
+      orderSongStatus = wsOrderSongStatus
+      return
+    }
+
     const currOrderList = readFile(databaseName)
 
     if (type === 'init') sendPlayList(currOrderList)
@@ -155,8 +163,9 @@ function localAddSong(orderInfo) {
 }
 
 const start = () => {
+  global.toNetSocket?.send('init')
   connecting(roomId, (type, content) => {
-    if (type !== 5 || !content) return
+    if (type !== 5 || !content || !orderSongStatus) return
     try {
       const {
         msg,

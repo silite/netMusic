@@ -14,7 +14,7 @@ function writeWholeFile(filename, content, callback = (err) => { }) {
   try {
     fs.writeFile(filename, content, callback)
   } catch (e) {
-    error(`写入本地点歌文件, e: ${e}`)
+    error(`写入${filename}, e: ${e}`)
   }
 }
 

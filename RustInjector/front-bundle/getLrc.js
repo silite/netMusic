@@ -126,6 +126,7 @@ function sendAllInfo() {
     emitPlayState()
     emitSongInfo()
     emitMessage({ lrcStatus: window.lrcStatus })
+    emitMessage({ orderSongStatus: window.orderSongStatus })
 }
 export function getLrc() {
     getCtlCallbackFuncName();
